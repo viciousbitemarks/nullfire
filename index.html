@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NullFire - Premier Roblox Script Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #1a1a2e;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        .divider {
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, transparent, #bb86fc, transparent);
+            margin: 50px 0;
+            opacity: 0;
+            animation: glowIn 1.8s ease-out forwards;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: scale(0.85);
+            animation: scaleIn 1.2s ease-out forwards;
+        }
+
+        .section-header h2 {
+            font-size: 2.8em;
+            color: #bb86fc;
+            text-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .section-header p {
+            font-size: 1.3em;
+            color: #b0b0b0;
+            max-width: 700px;
+            margin: 15px auto 0;
+        }
+
+        header {
+            text-align: center;
+            padding: 120px 0;
+            background: linear-gradient(135deg, #6b48ff, #8a2be2);
+            color: white;
+            border-radius: 25px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(-60px);
+            animation: slideInTop 1.4s ease-out forwards;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15), transparent);
+            opacity: 0.6;
+            animation: pulse 10s infinite;
+        }
+
+        header h1 {
+            font-size: 4.5em;
+            margin-bottom: 20px;
+            text-shadow: 0 5px 10px rgba(0, 0, 0, 0.6);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        header h1 i {
+            font-size: 0.8em;
+            margin-left: 10px;
+            color: #ff6f61;
+        }
+
+        header p {
+            font-size: 1.7em;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .script-section {
+            background-color: #2a2a4e;
+            padding: 60px;
+            border-radius: 25px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            margin-bottom: 50px;
+            text-align: center;
+            opacity: 0;
+            transform: translateX(-60px);
+            animation: slideInLeft 1.2s ease-out 0.2s forwards;
+        }
+
+        .script-section h3 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            color: #bb86fc;
+        }
+
+        .script-box {
+            background-color: #1a1a2e;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #e0e0e0;
+            word-break: break-all;
+            border: 3px solid #bb86fc;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .script-box:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 6px 18px rgba(187, 134, 252, 0.6);
+        }
+
+        .copy-btn {
+            background-color: #6b48ff;
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .copy-btn i {
+            font-size: 1em;
+        }
+
+        .copy-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.4s;
+        }
+
+        .copy-btn:hover::before {
+            left: 100%;
+        }
+
+        .copy-btn:hover {
+            background-color: #5a3bd9;
+            transform: scale(1.08) rotateX(5deg);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+        }
+
+        .why-choose {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+            opacity: 0;
+            transform: translateX(-60px);
+            animation: slideInLeft 1.2s ease-out 0.4s forwards;
+        }
+
+        .why-card {
+            background-color: #2a2a4e;
+            padding: 35px;
+            border-radius: 20px;
+            text-align: center;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            perspective: 1000px;
+        }
+
+        .why-card:hover {
+            transform: translateY(-15px) rotateX(10deg);
+            box-shadow: 0 10px 20px rgba(187, 134, 252, 0.5);
+        }
+
+        .why-card i {
+            font-size: 3.5em;
+            color: #bb86fc;
+            margin-bottom: 25px;
+            transition: transform 0.5s ease;
+        }
+
+        .why-card:hover i {
+            transform: rotateY(360deg);
+        }
+
+        .why-card h3 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #bb86fc;
+        }
+
+        .why-card p {
+            font-size: 1.2em;
+            color: #b0b0b0;
+            line-height: 1.7;
+        }
+
+        .games-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+            opacity: 0;
+            transform: translateX(60px);
+            animation: slideInRight 1.2s ease-out 0.6s forwards;
+        }
+
+        .game-card {
+            background-color: #2a2a4e;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            perspective: 1000px;
+        }
+
+        .game-card:hover {
+            transform: translateY(-15px) rotateY(10deg);
+            box-shadow: 0 10px 20px rgba(187, 134, 252, 0.5);
+        }
+
+        .game-card h4 {
+            font-size: 1.7em;
+            margin-bottom: 15px;
+            color: #bb86fc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .game-card h4 a {
+            color: #bb86fc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .game-card h4 a:hover {
+            color: #e0e0e0;
+        }
+
+        .game-card h4 i {
+            font-size: 1.2em;
+            margin-right: 10px;
+        }
+
+        .game-card p {
+            font-size: 1.1em;
+            color: #b0b0b0;
+        }
+
+        .status-legend {
+            text-align: center;
+            margin-top: 30px;
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out 0.8s forwards;
+        }
+
+        .status-legend h4 {
+            font-size: 1.5em;
+            color: #bb86fc;
+            margin-bottom: 15px;
+        }
+
+        .status-legend ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .status-legend li {
+            font-size: 1em;
+            display: flex;
+            align-items: center;
+        }
+
+        .status-legend li i {
+            margin-right: 8px;
+        }
+
+        .instructions {
+            text-align: left;
+            max-width: 900px;
+            margin: 0 auto 50px;
+            opacity: 0;
+            transform: scale(0.9);
+            animation: scaleIn 1.2s ease-out 1s forwards;
+        }
+
+        .instructions h3 {
+            font-size: 2.2em;
+            margin-bottom: 25px;
+            color: #bb86fc;
+        }
+
+        .instructions ol {
+            list-style-type: decimal;
+            margin-left: 35px;
+        }
+
+        .instructions li {
+            margin-bottom: 18px;
+            font-size: 1.3em;
+            line-height: 1.7;
+        }
+
+        .faq {
+            text-align: left;
+            max-width: 900px;
+            margin: 0 auto 50px;
+            opacity: 0;
+            transform: translateY(60px);
+            animation: slideInBottom 1.2s ease-out 1.2s forwards;
+        }
+
+        .faq h3 {
+            font-size: 2.2em;
+            margin-bottom: 30px;
+            color: #bb86fc;
+            text-align: center;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            background-color: #2a2a4e;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .faq-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(187, 134, 252, 0.4);
+        }
+
+        .faq-question {
+            font-size: 1.3em;
+            padding: 20px;
+            background-color: #3a3a6e;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background-color: #4a4a8e;
+        }
+
+        .faq-question i {
+            margin-right: 10px;
+            color: #bb86fc;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(90deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 20px;
+            background-color: #2a2a4e;
+            font-size: 1.1em;
+            line-height: 1.6;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px; /* Adjust based on content */
+            padding: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 50px 0;
+            background: linear-gradient(135deg, #6b48ff, #8a2be2);
+            color: white;
+            border-radius: 25px;
+            opacity: 0;
+            animation: fadeIn 1.8s ease-out 1.4s forwards;
+        }
+
+        footer p {
+            font-size: 1.2em;
+        }
+
+        @keyframes slideInTop {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes glowIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.6;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 80px 0;
+            }
+
+            header h1 {
+                font-size: 3.2em;
+            }
+
+            header p {
+                font-size: 1.3em;
+            }
+
+            .script-section {
+                padding: 40px;
+            }
+
+            .script-section h3 {
+                font-size: 2em;
+            }
+
+            .container {
+                padding: 25px;
+            }
+
+            .section-header h2 {
+                font-size: 2.2em;
+            }
+
+            .faq-answer {
+                font-size: 1em;
+            }
+
+            .faq-item.active .faq-answer {
+                max-height: 300px; /* Adjust for mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>NullFire <i class="fas fa-fire"></i></h1>
+            <p>Premier Roblox Script Hub for Dead Rails</p>
+        </header>
+
+        <div class="divider"></div>
+
+        <div class="section-header">
+            <h2>Scripts</h2>
+            <p>Unlock powerful scripts to dominate Dead Rails and more.</p>
+        </div>
+        <div class="script-section">
+            <h3>Main Script</h3>
+            <div class="script-box">
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/InfernusScripts/Null-Fire/main/Loader"))()
+            </div>
+            <button class="copy-btn" onclick="copyMainScript(this)"><i class="fas fa-copy"></i> Copy Script</button>
+        </div>
+
+        <div class="script-section">
+            <h3>Alternative Script</h3>
+            <div class="script-box">
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/NuIlFire/NullFire/main/loader.lua"))()
+            </div>
+            <button class="copy-btn" onclick="copyAltScript(this)"><i class="fas fa-copy"></i> Copy Script</button>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-header">
+            <h2>Why Choose NullFire</h2>
+            <p>Unmatched features for the ultimate scripting experience.</p>
+        </div>
+        <div class="why-choose">
+            <div class="why-card">
+                <i class="fas fa-bolt"></i>
+                <h3>Blazing Performance</h3>
+                <p>Lightning-fast script execution for seamless gameplay.</p>
+            </div>
+            <div class="why-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Top-Tier Security</h3>
+                <p>Undetected scripts keep your account safe from bans.</p>
+            </div>
+            <div class="why-card">
+                <i class="fas fa-sync-alt"></i>
+                <h3>Dynamic Updates</h3>
+                <p>Frequent updates ensure compatibility and new features.</p>
+            </div>
+            <div class="why-card">
+                <i class="fas fa-ad"></i>
+                <h3>Ad-Free Access</h3>
+                <p>Keyless, no ads—just pure scripting power.</p>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-header">
+            <h2>Supported Games</h2>
+            <p>Explore the games compatible with NullFire scripts.</p>
+        </div>
+        <div class="games-section">
+            <div class="game-card">
+                <h4><i class="fas fa-circle" style="color: #00ff00;"></i><a href="https://www.roblox.com/games/189707/Natural-Disaster-Survival" target="_blank">Natural Disaster Survival</a></h4>
+                <p>Main script: Fully functional and undetected.</p>
+            </div>
+            <div class="game-card">
+                <h4><i class="fas fa-circle" style="color: #00ff00;"></i><a href="https://www.roblox.com/games/116495829188952/Dead-Rails-Alpha" target="_blank">Dead Rails</a></h4>
+                <p>Main script: Fully functional and undetected.</p>
+            </div>
+            <div class="game-card">
+                <h4><i class="fas fa-circle" style="color: #00ff00;"></i><a href="https://www.roblox.com/games/18799085098/Hide-or-Die" target="_blank">Hide or Die</a></h4>
+                <p>Main script: Fully functional and undetected.</p>
+            </div>
+            <div class="game-card">
+                <h4><i class="fas fa-circle" style="color: #ff0000;"></i><a href="https://www.roblox.com/games/6447798030/2-0-Funky-Friday" target="_blank">Funky Friday</a></h4>
+                <p>Main script: Not working, currently detected.</p>
+            </div>
+            <div class="game-card">
+                <h4><i class="fas fa-circle" style="color: #ffff00;"></i><a href="https://www.roblox.com/games/12411473842/Pressure" target="_blank">Pressure</a></h4>
+                <p>Main script: Not working, in rework.</p>
+            </div>
+            <div class="game-card">
+                <h4><i class="fas fa-circle" style="color: #00ff00;"></i><a href="https://www.roblox.com/games/18687417158/Forsaken" target="_blank">Forsaken</a></h4>
+                <p>Alternative script: Fully functional and undetected.</p>
+            </div>
+            <div class="game-card">
+                <h4><i class="fas fa-circle" style="color: #00ff00;"></i><a href="https://www.roblox.com/games/6516141723/DOORS" target="_blank">Doors</a></h4>
+                <p>Alternative script: Fully functional and undetected.</p>
+        </div>
+        <div class="status-legend">
+            <h4>Status Indicators</h4>
+            <ul>
+                <li><i class="fas fa-circle" style="color: #00ff00;"></i> Working & Undetected</li>
+                <li><i class="fas fa-circle" style="color: #ff0000;"></i> Not Working, Detected</li>
+                <li><i class="fas fa-circle" style="color: #ffff00;"></i> Not Working, In Rework</li>
+            </ul>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-header">
+            <h2>How to Use</h2>
+            <p>Get started with NullFire in a few easy steps.</p>
+        </div>
+        <div class="instructions">
+            <h3>Usage Guide</h3>
+            <ol>
+                <li>Launch Roblox and join a supported game.</li>
+                <li>Click a "Copy Script" button to copy the script code.</li>
+                <li>Paste the code into your executor.</li>
+                <li>Execute the script to unlock advanced features.</li>
+                <li>Dominate with NullFire's power!</li>
+            </ol>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-header">
+            <h2>Frequently Asked Questions</h2>
+            <p>Your questions about NullFire, answered.</p>
+        </div>
+        <div class="faq">
+            <h3>FAQ</h3>
+            <div class="faq-item">
+                <div class="faq-question"><i class="fas fa-question-circle"></i>Is the script keyless?</div>
+                <div class="faq-answer">Absolutely! You can use the script easily without having to deal with all of those pesky advertisements.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question"><i class="fas fa-question-circle"></i>Is the script safe to use?</div>
+                <div class="faq-answer">Yes, the script is safe to use, it is completely undetected and if you get banned for using NullFire, it means you were either manually reported by someone or was using blatant features.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question"><i class="fas fa-question-circle"></i>Can the script be used in any executors?</div>
+                <div class="faq-answer">Yes, the script can be used by any executors as long as the executor has a high percentage of sUNC.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question"><i class="fas fa-question-circle"></i>Is the script updated?</div>
+                <div class="faq-answer">Yes! Once a game that is supported by NullFire updates their game, then the script would also be updated to add more features and replace the outdated ones.</div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <footer>
+            <p>© 2025 NullFire. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        function copyMainScript(button) {
+            const scriptText = `loadstring(game:HttpGet("https://raw.githubusercontent.com/InfernusScripts/Null-Fire/main/Loader"))()`;
+            navigator.clipboard.write(scriptText).then(() => {
+                button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                button.style.backgroundColor = "#bb86fc";
+                button.style.transform = "scale(1.12)";
+                setTimeout(() => {
+                    button.innerHTML = '<i class="fas fa-copy"></i> Copy Script';
+                    button.style.backgroundColor = "#6b48ff";
+                    button.style.transform = "scale(1)";
+                }, 2000);
+            }).catch(err => {
+                alert("Failed to copy script: " + err);
+            });
+        }
+
+        function copyAltScript(button) {
+            const scriptText = `loadstring(game:HttpGet("https://raw.githubusercontent.com/NuIlFire/NullFire/main/loader.lua"))()`;
+            navigator.clipboard.write(scriptText).then(() => {
+                button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                button.style.backgroundColor = "#bb86fc";
+                button.style.transform = "scale(1.12)";
+                setTimeout(() => {
+                    button.innerHTML = '<i class="fas fa-copy"></i> Copy Script';
+                    button.style.backgroundColor = "#6b48ff";
+                    button.style.transform = "scale(1)";
+                }, 2000);
+            }).catch(err => {
+                alert("Failed to copy script: " + err);
+            });
+        }
+
+        // FAQ toggle functionality
+        document.querySelectorAll('.faq-item').forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                // Close all other FAQ items
+                document.querySelectorAll('.faq-item').forEach(i => {
+                    i.classList.remove('active');
+                });
+                // Toggle current item
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+                           </html>
