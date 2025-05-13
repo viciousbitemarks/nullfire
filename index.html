@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NullFire - Premier Roblox Script Hub</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -164,7 +164,7 @@
             content: '';
             position: absolute;
             top: 0;
-            left: -100%;
+            personally identifiable information
             width: 100%;
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
@@ -402,7 +402,7 @@
         }
 
         .faq-item.active .faq-answer {
-            max-height: 200px; /* Adjust based on content */
+           max-height: 500px;
             padding: 20px;
         }
 
@@ -470,6 +470,22 @@
         }
 
         @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .divider {
+                margin: 30px 0;
+            }
+
+            .section-header {
+                margin-bottom: 30px;
+            }
+
+            .script-section, .why-choose, .games-section, .instructions, .faq {
+                margin-bottom: 30px;
+            }
+
             header {
                 padding: 80px 0;
             }
@@ -490,20 +506,12 @@
                 font-size: 2em;
             }
 
-            .container {
-                padding: 25px;
-            }
-
             .section-header h2 {
                 font-size: 2.2em;
             }
 
-            .faq-answer {
-                font-size: 1em;
-            }
-
             .faq-item.active .faq-answer {
-                max-height: 300px; /* Adjust for mobile */
+                max-height: 300px;
             }
         }
     </style>
@@ -598,8 +606,9 @@
                 <p>Alternative script: Fully functional and undetected.</p>
             </div>
             <div class="game-card">
-                <h4><i class="fas fa-circle" style="color: #00ff00;"></i><a href="https://www.roblox.com/games/6516141723/DOORS" target="_blank">Doors</a></h4>
+                <h4><i class="fas fa-circle" style="color: #00ff00;"></i><a href="https://www.roblox.com/games/6839171747/Doors" target="_blank">Doors</a></h4>
                 <p>Alternative script: Fully functional and undetected.</p>
+            </div>
         </div>
         <div class="status-legend">
             <h4>Status Indicators</h4>
@@ -636,19 +645,19 @@
         <div class="faq">
             <h3>FAQ</h3>
             <div class="faq-item">
-                <div class="faq-question"><i class="fas fa-question-circle"></i>Is the script keyless?</div>
+                <div class="faq-question" role="button" aria-expanded="false" tabindex="0"><i class="fas fa-question-circle"></i>Is the script keyless?</div>
                 <div class="faq-answer">Absolutely! You can use the script easily without having to deal with all of those pesky advertisements.</div>
             </div>
             <div class="faq-item">
-                <div class="faq-question"><i class="fas fa-question-circle"></i>Is the script safe to use?</div>
+                <div class="faq-question" role="button" aria-expanded="false" tabindex="0"><i class="fas fa-question-circle"></i>Is the script safe to use?</div>
                 <div class="faq-answer">Yes, the script is safe to use, it is completely undetected and if you get banned for using NullFire, it means you were either manually reported by someone or was using blatant features.</div>
             </div>
             <div class="faq-item">
-                <div class="faq-question"><i class="fas fa-question-circle"></i>Can the script be used in any executors?</div>
+                <div class="faq-question" role="button" aria-expanded="false" tabindex="0"><i class="fas fa-question-circle"></i>Can the script be used in any executors?</div>
                 <div class="faq-answer">Yes, the script can be used by any executors as long as the executor has a high percentage of sUNC.</div>
             </div>
             <div class="faq-item">
-                <div class="faq-question"><i class="fas fa-question-circle"></i>Is the script updated?</div>
+                <div class="faq-question" role="button" aria-expanded="false" tabindex="0"><i class="fas fa-question-circle"></i>Is the script updated?</div>
                 <div class="faq-answer">Yes! Once a game that is supported by NullFire updates their game, then the script would also be updated to add more features and replace the outdated ones.</div>
             </div>
         </div>
@@ -663,7 +672,7 @@
     <script>
         function copyMainScript(button) {
             const scriptText = `loadstring(game:HttpGet("https://raw.githubusercontent.com/InfernusScripts/Null-Fire/main/Loader"))()`;
-            navigator.clipboard.write(scriptText).then(() => {
+            navigator.clipboard.writeText(scriptText).then(() => {
                 button.innerHTML = '<i class="fas fa-check"></i> Copied!';
                 button.style.backgroundColor = "#bb86fc";
                 button.style.transform = "scale(1.12)";
@@ -679,7 +688,7 @@
 
         function copyAltScript(button) {
             const scriptText = `loadstring(game:HttpGet("https://raw.githubusercontent.com/NuIlFire/NullFire/main/loader.lua"))()`;
-            navigator.clipboard.write(scriptText).then(() => {
+            navigator.clipboard.writeText(scriptText).then(() => {
                 button.innerHTML = '<i class="fas fa-check"></i> Copied!';
                 button.style.backgroundColor = "#bb86fc";
                 button.style.transform = "scale(1.12)";
@@ -693,21 +702,26 @@
             });
         }
 
-        // FAQ toggle functionality
         document.querySelectorAll('.faq-item').forEach(item => {
             const question = item.querySelector('.faq-question');
             question.addEventListener('click', () => {
                 const isActive = item.classList.contains('active');
-                // Close all other FAQ items
                 document.querySelectorAll('.faq-item').forEach(i => {
                     i.classList.remove('active');
+                    i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
                 });
-                // Toggle current item
                 if (!isActive) {
                     item.classList.add('active');
+                    question.setAttribute('aria-expanded', 'true');
+                }
+            });
+            question.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    question.click();
                 }
             });
         });
     </script>
 </body>
-                           </html>
+    </html>
